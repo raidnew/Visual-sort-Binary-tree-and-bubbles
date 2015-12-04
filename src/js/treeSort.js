@@ -64,6 +64,7 @@ function TreeSort(){
         var result = this.selectValue();
         if(result === false){
             console.log(this.sortedArray);
+            return false;
         }else{
             this.currentBranch = result;
         }
