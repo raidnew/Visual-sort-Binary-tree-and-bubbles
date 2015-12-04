@@ -15,3 +15,12 @@
     padding-left: 10px;
 }
 
+.treeView .branch {
+    color: blue;
+    padding-left: 10px;
+}
+
+.treeView .testBranch {
+    color: red;
+    padding-left: 10px;
+}

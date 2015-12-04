@@ -33,4 +33,37 @@ function createViewTreeSort(el){
         $("#element"+index).addClass("arrayElementDisable");
     }
 
+    this.drawTree = function(){
+        var el = $("<div>");
+        el.addClass("treeView");
+        el.attr('id', "treeView");
+        this.mainel.appendChild(el[0]);
+    }
+
+    this.testTreeElement = function(view){
+        if(view) {
+            view.removeClass("branch");
+            view.addClass("testBranch");
+        }
+    }
+
+    this.endTestTreeElement = function(view){
+        if(view) {
+            view.removeClass("testBranch");
+            view.addClass("branch");
+        }
+    }
+
+    this.createTreeViewElement = function(value){
+        var el = $('<div>');
+        el.addClass("branch");
+        el.html("<a>"+value+"</a>");
+        $("#treeView").append(el);
+        return el;
+    }
+
+    this.addTreeElement = function(){
+
+    }
+
 }

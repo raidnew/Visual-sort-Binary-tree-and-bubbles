@@ -13,24 +13,27 @@ function TreeSort(view){
     this.startCreateTree = function(){
         this.indexArray = 0;
         this.currentStatus = this.CREATE_TREE;
-        this.tree = {};
+        this.tree = this.createBranch();
+        this.branchIndex = 0;
         this.currentBranch = this.tree;
-
         this.view.drawArray(this.arrayForSort);
+        this.view.drawTree();
     }
 
     this.addTreeElement = function(){
         if(this.indexArray < this.arrayForSort.length){
 
             this.view.selectElementInArray(this.indexArray);
+            this.view.endTestTreeElement(this.prevTestBranchView);
+            this.prevTestBranchView = this.currentBranch.view;
+            this.view.testTreeElement(this.prevTestBranchView);
 
             var value = this.arrayForSort[this.indexArray];
             var result = this.createTreeElement(value, this.currentBranch);
             if(result === true){
-                this.currentBranch = this.tree;
-
+                this.currentBranch.view = this.view.createTreeViewElement(value);
                 this.view.disableElementInArray(this.indexArray);
-
+                this.currentBranch = this.tree;
                 this.indexArray++;
             }else{
                 this.currentBranch = result;
@@ -49,15 +52,20 @@ function TreeSort(view){
             return true;
         }else if(value < tree.value){
             if(tree.left === undefined){
-                tree.left = {};
+                tree.left = this.createBranch();
             }
             return tree.left;
         }else{
             if(tree.right === undefined){
-                tree.right = {};
+                tree.right = this.createBranch();
             }
             return tree.right;
         }
+    }
+
+    this.createBranch = function(){
+        var newObj = {};
+        return newObj;
     }
 
     this.startTraverseTree = function(){

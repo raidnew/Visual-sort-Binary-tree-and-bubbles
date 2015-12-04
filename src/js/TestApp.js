@@ -13,7 +13,7 @@ function TestApp(el){
         this.sorting = new TreeSort(this.view);
         this.sorting.generateRandomArray(20, 0, 100);
         this.sorting.startCreateTree();
-        this.idInterval = setInterval($.proxy(this.tick, this), 100);
+        this.idInterval = setInterval($.proxy(this.tick, this), 1000);
 
     }
 
