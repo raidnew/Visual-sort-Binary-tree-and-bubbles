@@ -8,11 +8,6 @@ var TRAVERSE_TREE = "traversetree";
 function TreeSort(){
     BaseSort.apply(this, arguments);
     this.currentStatus = CREATE_TREE;
-
-    this.generateRandomArray(30);
-
-    console.log(this.arrayForSort);
-
     this.indexArray = 0;
 
     this.tree = {};
@@ -58,13 +53,12 @@ function TreeSort(){
         this.currentStatus = TRAVERSE_TREE;
     }
 
-    this.sortedArray = [];
-
     this.traverseTree = function(){
         var result = this.selectValue();
         if(result === false){
-            console.log(this.sortedArray);
             return false;
+        }else if(!isNaN(result)) {
+            this.sortedArray.push(result);
         }else{
             this.currentBranch = result;
         }
@@ -76,9 +70,7 @@ function TreeSort(){
             return this.currentBranch.left;
         }else if(!this.currentBranch.hasOwnProperty("readed")){
             this.currentBranch.readed = true;
-            var value = this.currentBranch.value;
-            this.sortedArray.push(value);
-            return this.currentBranch;
+            return this.currentBranch.value;
         }else if(this.currentBranch.hasOwnProperty("right") && !this.currentBranch.right.hasOwnProperty("readed")){
             this.currentBranch.right.parent = this.currentBranch;
             return this.currentBranch.right;

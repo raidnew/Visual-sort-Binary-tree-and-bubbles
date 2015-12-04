@@ -3,22 +3,20 @@
  */
 function BaseSort(){
     this.arrayForSort = [];
+    this.sortedArray = [];
 }
 
 BaseSort.prototype.tick = function(){
-    //addLog("tick");
+
 }
 
 BaseSort.prototype.cloneArray = function(){
     return this.arrayForSort.concat();
 }
 
-BaseSort.prototype.generateRandomArray = function(length){
-
-    console.log("BaseSort.prototype.generateRandomArray");
-
+BaseSort.prototype.generateRandomArray = function(length, min, max){
     this.arrayForSort = [];
     for(var i = 0; i < length; i++){
-        this.arrayForSort.push(Math.round(Math.random() * length * 20));
+        this.arrayForSort.push(Math.round(Math.random() * (max - min) + min));
     }
 }

@@ -37,7 +37,8 @@ function startApp(){
 
     this.init = function(){
         var test = new TestApp();
-        test.startTreeTest();
+        //test.startTreeTest();
+        test.startBubbleTest();
     }
 
     this.startTest();
