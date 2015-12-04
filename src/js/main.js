@@ -3,11 +3,10 @@
  */
 
 function startApp(){
-    var fileArray = ["js/BaseSort.js", "js/BubbleSort.js", "js/TreeSort.js", "js/TestApp.js"];
+    var fileArray = ["js/BaseSort.js", "js/BubbleSort.js", "js/TreeSort.js", "js/TestApp.js", "js/TreeSortView.js"];
     var waitLoad = 0;
 
     this.addScript = function(src){
-        addLog("load script: "+src);
         var script = document.createElement('script');
         script.src = src;
         script.async = false;
@@ -28,30 +27,31 @@ function startApp(){
 
     this.checkReady = function(){
         if(waitLoad == 0){
-            addLog("scripts loaded");
             this.init();
         }else if(waitLoad < 0){
-            addLog("error load script");
+            console.error("Load js");
         }
     }
 
     this.init = function(){
-        var test = new TestApp();
-        //test.startTreeTest();
+
+        this.treeSort();
+
+    }
+
+    this.treeSort = function(){
+        var el = $('#sortAnimation')[0];
+        var test = new TestApp(el);
+        test.startTreeTest();
+
+    }
+
+    this.bubbleSort = function(){
+        var el = $('#sortAnimation')[0];
+        var test = new TestApp(el);
         test.startBubbleTest();
     }
 
     this.startTest();
 
-}
-
-function addLog(message){
-    var log = document.getElementById('log');
-    if(log) {
-        var msg = document.createElement('a')
-        msg.className = "logMessage";
-        msg.innerHTML = message;
-        log.appendChild(msg);
-        log.appendChild(document.createElement('br'));
-    }
 }

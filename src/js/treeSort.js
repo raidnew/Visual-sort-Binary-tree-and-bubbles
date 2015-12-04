@@ -2,23 +2,35 @@
  * Created by User on 04.12.2015.
  */
 
-var CREATE_TREE = "createtree";
-var TRAVERSE_TREE = "traversetree";
+function TreeSort(view){
+    this.CREATE_TREE = "createtree";
+    this.TRAVERSE_TREE = "traversetree";
 
-function TreeSort(){
     BaseSort.apply(this, arguments);
-    this.currentStatus = CREATE_TREE;
-    this.indexArray = 0;
 
-    this.tree = {};
-    this.currentBranch = this.tree;
+    this.view = view;
+
+    this.startCreateTree = function(){
+        this.indexArray = 0;
+        this.currentStatus = this.CREATE_TREE;
+        this.tree = {};
+        this.currentBranch = this.tree;
+
+        this.view.drawArray(this.arrayForSort);
+    }
 
     this.addTreeElement = function(){
         if(this.indexArray < this.arrayForSort.length){
+
+            this.view.selectElementInArray(this.indexArray);
+
             var value = this.arrayForSort[this.indexArray];
             var result = this.createTreeElement(value, this.currentBranch);
             if(result === true){
                 this.currentBranch = this.tree;
+
+                this.view.disableElementInArray(this.indexArray);
+
                 this.indexArray++;
             }else{
                 this.currentBranch = result;
@@ -49,8 +61,8 @@ function TreeSort(){
     }
 
     this.startTraverseTree = function(){
+        this.currentStatus = this.TRAVERSE_TREE;
         this.currentBranch = this.tree;
-        this.currentStatus = TRAVERSE_TREE;
     }
 
     this.traverseTree = function(){
@@ -87,9 +99,9 @@ function TreeSort(){
 TreeSort.prototype = Object.create(BaseSort.prototype);
 
 TreeSort.prototype.tick = function(){
-    if(this.currentStatus == CREATE_TREE){
+    if(this.currentStatus == this.CREATE_TREE){
         return this.addTreeElement();
-    }else if(this.currentStatus == TRAVERSE_TREE){
+    }else if(this.currentStatus == this.TRAVERSE_TREE){
         return this.traverseTree();
     }
 }

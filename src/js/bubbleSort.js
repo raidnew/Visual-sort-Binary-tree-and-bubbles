@@ -10,15 +10,12 @@ function BubbleSort(){
 
     this.initSort = function(){
         this.sortedArray = this.cloneArray();
-        console.log(this.sortedArray);
-
     }
 
     this.stepSort = function(){
         if(this.index1 >= this.sortedArray.length){
             return false;
         }else{
-
             if(this.index2 >= (this.sortedArray.length - this.index1 - 1)){
                 this.index1++;
                 this.index2 = 0;
@@ -31,13 +28,9 @@ function BubbleSort(){
                     this.sortedArray[this.index2] = this.sortedArray[this.index2 + 1];
                     this.sortedArray[this.index2 + 1] = temp;
                     this.swaping = false;
-                    console.log(this.sortedArray);
                 }
-
             }
-
         }
-
     }
 
     this.needSwap = function(){

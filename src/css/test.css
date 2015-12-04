@@ -1,0 +1,17 @@
+.startArray .arrayElement {
+    color: blue;
+    padding-left: 10px;
+}
+
+.startArray .arrayElementSelect {
+    color: blue;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.startArray .arrayElementDisable {
+    color: gray;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
