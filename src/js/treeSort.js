@@ -79,6 +79,8 @@ function TreeSort(view){
     this.startTraverseTree = function(){
         this.currentStatus = this.TRAVERSE_TREE;
         this.currentBranch = this.tree;
+
+        this.view.drawSortedArray();
     }
 
     this.traverseTree = function(){
@@ -87,8 +89,10 @@ function TreeSort(view){
             return false;
         }else if(typeof result == "number") {
             this.sortedArray.push(result);
+            this.view.addValueInFinalArray(result);
         }else{
             this.currentBranch = result;
+            this.view.checkBranch(result);
         }
     }
 

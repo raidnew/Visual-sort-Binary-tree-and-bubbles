@@ -14,7 +14,7 @@ function TestApp(el){
         this.sorting.generateRandomArray(20, 0, 100);
         //this.sorting.setArray([10,5,15]);
         this.sorting.startCreateTree();
-        this.idInterval = setInterval($.proxy(this.tick, this), 200);
+        this.idInterval = setInterval($.proxy(this.tick, this), 20);
 
     }
 

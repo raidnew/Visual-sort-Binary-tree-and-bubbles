@@ -82,6 +82,9 @@ function createViewTreeSort(el){
         if(branch.parent === undefined) {
             $("#treeView").append(el);
         }else{
+
+            branch.parent.view.addClass('branchParent');
+
             if(branch === branch.parent.left) {
                 el.addClass("leftbranch");
                 branch.parent.view.append(el);
@@ -92,6 +95,26 @@ function createViewTreeSort(el){
         }
 
         branch.view = el;
+    }
+
+    this.drawSortedArray = function(){
+        var el = $('<div>');
+        el.addClass("sortedArray");
+        el.attr('id', "sortedArray");
+
+        this.mainel.appendChild(el[0]);
+    }
+
+    this.addValueInFinalArray = function(value){
+        var elArray = $("<a>");
+        elArray.html(value);
+        elArray.addClass("arrayElement");
+        //elArray.attr('id', "element");
+
+        $("#sortedArray").append(elArray);
+    }
+
+    this.checkBranch = function(branch){
 
     }
 

@@ -15,10 +15,15 @@
     padding-left: 10px;
 }
 
+.treeView {
+    overflow: auto;
+}
+
 .treeView .branch {
     color: blue;
     float: left;
-    border-style: groove;
+    /*border-style: groove;*/
+    /*min-width: 20px;*/
 }
 
 .treeView .test {
@@ -27,12 +32,29 @@
 
 .treeView .valueBranch {
     text-align: center;
+    padding-top: 20px;
+}
+
+.treeView .branchParent {
+    /*min-width: 50px;*/
 }
 
 .treeView .leftbranch {
+    float: left;
+    padding-right: 20px;
 }
 
 .treeView .rightbranch {
-
+    float: right;
+    padding-left: 20px;
 }
 
+.sortedArray {
+    padding-top: 20px;
+    float: left;
+}
+
+.sortedArray .arrayElement {
+    color: blue;
+    padding-left: 10px;
+}
