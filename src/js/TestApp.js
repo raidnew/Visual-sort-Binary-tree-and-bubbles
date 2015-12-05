@@ -5,25 +5,35 @@ function TestApp(el){
 
     this.idInterval;
     this.sorting;
+    this.array;
 
     this.viewContainer = el;
-    this.view = new createViewTreeSort(this.viewContainer);
+    this.view;
 
     this.startTreeTest = function(){
+        this.view = new createViewTreeSort(this.viewContainer);
         this.sorting = new TreeSort(this.view);
-        this.sorting.generateRandomArray(20, 0, 100);
-        //this.sorting.setArray([10,5,15]);
+        if(this.array === undefined){
+            this.array = createRandomArray(30, 0, 100);
+        }
+        this.sorting.setArray(this.array);
         this.sorting.startCreateTree();
-        this.idInterval = setInterval($.proxy(this.tick, this), 20);
-
+        this.start();
     }
 
     this.startBubbleTest = function(){
-        this.sorting = new BubbleSort();
-        this.sorting.generateRandomArray(20, 0, 100);
+        this.view = new createViewBubbleSort(this.viewContainer);
+        this.sorting = new BubbleSort(this.view);
+        if(this.array === undefined){
+            this.array = createRandomArray(30, 0, 100);
+        }
+        this.sorting.setArray(this.array);
         this.sorting.initSort();
-        this.idInterval = setInterval($.proxy(this.tick, this), 20);
+        this.start();
+    }
 
+    this.start = function(){
+        this.idInterval = setInterval($.proxy(this.tick, this), 200);
     }
 
     this.tick = function(){

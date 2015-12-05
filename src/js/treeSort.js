@@ -8,8 +8,6 @@ function TreeSort(view){
 
     BaseSort.apply(this, arguments);
 
-    this.view = view;
-
     this.startCreateTree = function(){
         this.indexArray = 0;
         this.currentStatus = this.CREATE_TREE;

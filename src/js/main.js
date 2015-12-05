@@ -3,7 +3,7 @@
  */
 
 function startApp(){
-    var fileArray = ["js/BaseSort.js", "js/BubbleSort.js", "js/TreeSort.js", "js/TestApp.js", "js/TreeSortView.js"];
+    var fileArray = ["js/BaseView.js", "js/BaseSort.js", "js/BubbleSort.js", "js/TreeSort.js", "js/TestApp.js", "js/BubbleSortView.js", "js/TreeSortView.js"];
     var waitLoad = 0;
 
     this.addScript = function(src){
@@ -18,7 +18,7 @@ function startApp(){
         document.head.appendChild(script);
     }
 
-    this.startTest = function()
+    this.startLoad = function()
     {
         for(var i = 0;i<fileArray.length;i++){
             this.addScript(fileArray[i]);
@@ -27,31 +27,56 @@ function startApp(){
 
     this.checkReady = function(){
         if(waitLoad == 0){
-            this.init();
+            initApp();
         }else if(waitLoad < 0){
             console.error("Load js");
         }
     }
 
-    this.init = function(){
+    this.startLoad();
 
-        this.treeSort();
+}
+
+var test;
+var array;
+
+function initApp(){
+    var el = $('#sortAnimation')[0];
+    test = new TestApp(el);
+}
+
+function treeSort(){
+    test.array = array;
+    test.startTreeTest();
+
+}
+
+function bubbleSort(){
+    test.array = array;
+    test.startBubbleTest();
+}
+
+function createRandomArray(){
+    array = generateRandomArray(30, 0, 200);
+}
+
+function startSort(){
+    var type = $('input[name=sorttype]:checked').val();//document.getElementById("sorttype");
+    switch (type){
+        case "bubble":
+            bubbleSort();
+            break;
+        case "tree":
+            treeSort();
+            break;
 
     }
+}
 
-    this.treeSort = function(){
-        var el = $('#sortAnimation')[0];
-        var test = new TestApp(el);
-        test.startTreeTest();
-
+function generateRandomArray(length, min, max){
+    var array = [];
+    for(var i = 0; i < length; i++){
+        array.push(Math.round(Math.random() * (max - min) + min));
     }
-
-    this.bubbleSort = function(){
-        var el = $('#sortAnimation')[0];
-        var test = new TestApp(el);
-        test.startBubbleTest();
-    }
-
-    this.startTest();
-
+    return array;
 }

@@ -4,7 +4,8 @@
 
 function createViewTreeSort(el){
 
-    this.mainel = el;
+    BaseView.apply(this, arguments);
+
     this.selectedBranch;
 
     this.drawArray = function(array){
@@ -119,3 +120,5 @@ function createViewTreeSort(el){
     }
 
 }
+
+createViewTreeSort.prototype = Object.create(BaseView.prototype);
