@@ -20,3 +20,7 @@ BaseSort.prototype.generateRandomArray = function(length, min, max){
         this.arrayForSort.push(Math.round(Math.random() * (max - min) + min));
     }
 }
+
+BaseSort.prototype.setArray = function(array){
+    this.arrayForSort = array;
+}

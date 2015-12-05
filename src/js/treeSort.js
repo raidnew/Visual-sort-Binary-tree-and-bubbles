@@ -14,7 +14,6 @@ function TreeSort(view){
         this.indexArray = 0;
         this.currentStatus = this.CREATE_TREE;
         this.tree = this.createBranch();
-        this.branchIndex = 0;
         this.currentBranch = this.tree;
         this.view.drawArray(this.arrayForSort);
         this.view.drawTree();
@@ -23,19 +22,20 @@ function TreeSort(view){
     this.addTreeElement = function(){
         if(this.indexArray < this.arrayForSort.length){
 
-            this.view.selectElementInArray(this.indexArray);
-            this.view.endTestTreeElement(this.prevTestBranchView);
-            this.prevTestBranchView = this.currentBranch.view;
-            this.view.testTreeElement(this.prevTestBranchView);
-
             var value = this.arrayForSort[this.indexArray];
-            var result = this.createTreeElement(value, this.currentBranch);
-            if(result === true){
-                this.currentBranch.view = this.view.createTreeViewElement(value);
+            var result = this.testTreeElement(value, this.currentBranch);
+
+            this.view.selectElementInArray(this.indexArray);
+            this.view.selectTreeElement(this.currentBranch);
+
+            if(result === true){ //Value wrote in branch
+
                 this.view.disableElementInArray(this.indexArray);
+                this.view.addValueToBranch(this.currentBranch);
+
                 this.currentBranch = this.tree;
                 this.indexArray++;
-            }else{
+            }else{ //Branch have value, select child
                 this.currentBranch = result;
             }
             return true;
@@ -45,26 +45,34 @@ function TreeSort(view){
 
     }
 
-    this.createTreeElement = function(value, tree){
+    this.testTreeElement = function(value, tree){
 
-        if(!tree.hasOwnProperty("value")){
-            tree.value = value;
+        if(!tree.isDefined()){
+            tree.setValue(value);
             return true;
         }else if(value < tree.value){
             if(tree.left === undefined){
-                tree.left = this.createBranch();
+                tree.left = this.createBranch(tree);
             }
             return tree.left;
         }else{
             if(tree.right === undefined){
-                tree.right = this.createBranch();
+                tree.right = this.createBranch(tree);
             }
             return tree.right;
         }
     }
 
-    this.createBranch = function(){
-        var newObj = {};
+    this.createBranch = function(parent){
+        var newObj = Object.create( null );
+        newObj.parent = parent;
+        newObj.root = this.tree;
+        newObj.setValue = function(value){
+            this.value = value;
+        }
+        newObj.isDefined = function(){
+            return this.value !== undefined && !isNaN(this.value);
+        }
         return newObj;
     }
 
@@ -77,7 +85,7 @@ function TreeSort(view){
         var result = this.selectValue();
         if(result === false){
             return false;
-        }else if(!isNaN(result)) {
+        }else if(typeof result == "number") {
             this.sortedArray.push(result);
         }else{
             this.currentBranch = result;
@@ -85,17 +93,17 @@ function TreeSort(view){
     }
 
     this.selectValue = function(){
-        if(this.currentBranch.hasOwnProperty("left") && !this.currentBranch.left.hasOwnProperty("readed")){
+        if(this.currentBranch.left !== undefined && this.currentBranch.left.readed === undefined){
             this.currentBranch.left.parent = this.currentBranch;
             return this.currentBranch.left;
-        }else if(!this.currentBranch.hasOwnProperty("readed")){
+        }else if(this.currentBranch.readed === undefined){
             this.currentBranch.readed = true;
             return this.currentBranch.value;
-        }else if(this.currentBranch.hasOwnProperty("right") && !this.currentBranch.right.hasOwnProperty("readed")){
+        }else if(this.currentBranch.right !== undefined && this.currentBranch.right.readed === undefined){
             this.currentBranch.right.parent = this.currentBranch;
             return this.currentBranch.right;
         }else{
-            if(this.currentBranch.hasOwnProperty("parent")) {
+            if(this.currentBranch.parent !== undefined) {
                 return this.currentBranch.parent;
             }else{
                 return false;

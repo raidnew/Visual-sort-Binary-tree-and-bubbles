@@ -5,6 +5,7 @@
 function createViewTreeSort(el){
 
     this.mainel = el;
+    this.selectedBranch;
 
     this.drawArray = function(array){
 
@@ -40,29 +41,57 @@ function createViewTreeSort(el){
         this.mainel.appendChild(el[0]);
     }
 
-    this.testTreeElement = function(view){
-        if(view) {
-            view.removeClass("branch");
-            view.addClass("testBranch");
+    this.selectTreeElement = function(branch){
+
+        if(this.selectedBranch !== undefined){
+            this.endTestTreeElement(this.selectedBranch);
+            this.selectedBranch = undefined;
+        }
+
+        if(branch.view === undefined){
+            this.createTreeViewElement(branch);
+        }
+
+        this.selectedBranch = branch;
+
+        this.selectedBranch.view.addClass("test");
+    }
+
+    this.endTestTreeElement = function(branch){
+        if(branch.view !== undefined) {
+            branch.view.removeClass("test");
         }
     }
 
-    this.endTestTreeElement = function(view){
-        if(view) {
-            view.removeClass("testBranch");
-            view.addClass("branch");
+    this.addValueToBranch = function(branch){
+        if(this.selectedBranch !== undefined){
+            this.endTestTreeElement(this.selectedBranch);
+            this.selectedBranch = undefined;
         }
+
+        var elvalue = $('<div>');
+        elvalue.addClass("valueBranch");
+        elvalue.html("<a>"+branch.value+"</a>");
+
+        branch.view.append(elvalue);
     }
 
-    this.createTreeViewElement = function(value){
+    this.createTreeViewElement = function(branch){
         var el = $('<div>');
         el.addClass("branch");
-        el.html("<a>"+value+"</a>");
-        $("#treeView").append(el);
-        return el;
-    }
+        if(branch.parent === undefined) {
+            $("#treeView").append(el);
+        }else{
+            if(branch === branch.parent.left) {
+                el.addClass("leftbranch");
+                branch.parent.view.append(el);
+            }else if(branch === branch.parent.right){
+                el.addClass("rightbranch");
+                branch.parent.view.append(el);
+            }
+        }
 
-    this.addTreeElement = function(){
+        branch.view = el;
 
     }
 

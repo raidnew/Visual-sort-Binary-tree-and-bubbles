@@ -17,10 +17,22 @@
 
 .treeView .branch {
     color: blue;
-    padding-left: 10px;
+    float: left;
+    border-style: groove;
 }
 
-.treeView .testBranch {
+.treeView .test {
     color: red;
-    padding-left: 10px;
 }
+
+.treeView .valueBranch {
+    text-align: center;
+}
+
+.treeView .leftbranch {
+}
+
+.treeView .rightbranch {
+
+}
+
