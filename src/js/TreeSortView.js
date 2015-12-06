@@ -152,13 +152,17 @@ function createViewTreeSort(el){
             var width = endx - startx;
             var height = endy - starty;
 
+            startx -= height / 2;
+
             var length = Math.sqrt(width * width + height * height)
-            var angleRad = -Math.atan2(width, height);
-            var angleGrad = angleRad/Math.PI*180;
+            var angleRad = Math.atan2(width, height);
+            var angleGrad = -angleRad/Math.PI*180;
 
-            var toOffsetLine = Math.sin(angleRad) * length;
+            var topOffsetLine = Math.cos(angleRad) * length / 2;
+            var leftOffsetLine = Math.sin(angleRad) * length / 2;
 
-            starty += toOffsetLine;
+            startx = startx + leftOffsetLine;
+            starty = starty - Math.abs(leftOffsetLine);
 
             el.style.transform = "rotate("+angleGrad+"deg)";
             el.style.height = length+"px";
