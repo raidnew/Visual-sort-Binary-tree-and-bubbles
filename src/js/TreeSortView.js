@@ -152,7 +152,9 @@ function createViewTreeSort(el){
             var width = endx - startx;
             var height = endy - starty;
 
-            startx -= height / 2;
+            var value = branch.view.children(".valueBranch").height() / 2;
+
+            startx -= height / 2 - value;
 
             var length = Math.sqrt(width * width + height * height)
             var angleRad = Math.atan2(width, height);
@@ -169,13 +171,6 @@ function createViewTreeSort(el){
 
             el.style.top = starty + "px";
             el.style.left = startx + "px";
-
-
-
-
-
-
-
         }
     }
 
