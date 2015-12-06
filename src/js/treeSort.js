@@ -1,7 +1,3 @@
-/**
- * Created by User on 04.12.2015.
- */
-
 function TreeSort(view){
     this.CREATE_TREE = "createtree";
     this.TRAVERSE_TREE = "traversetree";

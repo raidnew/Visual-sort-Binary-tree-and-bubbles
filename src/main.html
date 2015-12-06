@@ -8,15 +8,15 @@
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body onload="startApp()">
-<a>Много интересной инфы о сортировке массивов</a><br>
-<input type="radio" name="sorttype" value="tree"> Сортировка бинарным деревом<br>
-<input type="radio" name="sorttype" value="bubble"> Сортировка пузырьком<br>
-Длинна массива <input type="range" min="3" max="50" id="arrlength"><br>
+<a href="https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8" target="_blank">Много интересной инфы о сортировке массивов</a><br>
+<a>Выберете тип сортировки</a><br>
+<input checked="checked" type="radio" name="sorttype" value="tree"><a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0_%D1%81_%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E_%D0%B4%D0%B2%D0%BE%D0%B8%D1%87%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%B0" target="_blank"> Сортировка бинарным деревом</a><br>
+<input type="radio" name="sorttype" value="bubble"><a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BF%D1%83%D0%B7%D1%8B%D1%80%D1%8C%D0%BA%D0%BE%D0%BC" target="_blank"> Сортировка пузырьком</a><br>
+Длинна массива <a id="arrlengthinfo"></a> <input type="range" min="3" max="50" value="20" id="arrlength" onchange="onChangeArrLength()"><br>
+<button onclick="createRandomArray()">Генерировать массив</button><br>
 <button onclick="startSort()">Start sort</button><br>
-Скорость сортировки:<a id="speedsort">100</a> <input type="range" min="10" max="1000" value="100" id="rangespeedsort" onchange="onChangeSpeed()"><br>
-
+Скорость сортировки:<a id="speedsort"></a> <input type="range" min="0" max="1000" value="950" id="rangespeedsort" onchange="onChangeSpeed()"><br>
 <div id="info"></div>
 <div id="sortAnimation"></div>
-
 </body>
 </html>

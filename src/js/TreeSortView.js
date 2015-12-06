@@ -1,15 +1,8 @@
-/**
- * Created by User on 04.12.2015.
- */
-
 function createViewTreeSort(el){
 
     BaseView.apply(this, arguments);
 
-    this.graphics = $('<canvas>');
-
     this.drawArray = function(array){
-
         var el = $('<div>');
         el.addClass("startArray");
 
@@ -18,12 +11,10 @@ function createViewTreeSort(el){
             elArray.html(array[i]);
             elArray.addClass("arrayElement");
             elArray.attr('id', "element"+i);
-
             el.append(elArray);
         }
 
         this.mainel.appendChild(el[0]);
-        this.mainel.appendChild(this.graphics[0]);
     }
 
     this.selectElementInArray = function(index){
@@ -108,16 +99,6 @@ function createViewTreeSort(el){
     }
 
     this.checkLineBranch = function(branch){
-
-        /*
-        this.graphics[0].style.position = "absolute";
-
-        console.log(this.graphics.width)
-
-        this.graphics.style.width = this.mainel.style.width+"px";
-        this.graphics.height = this.mainel.height+"px";
-         */
-
         if(branch.left != undefined){
             this.checkLineBranch(branch.left);
         }

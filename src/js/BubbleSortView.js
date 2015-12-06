@@ -1,6 +1,3 @@
-/**
- * Created by oleg on 05.12.2015.
- */
 function createViewBubbleSort(el){
     BaseView.apply(this, arguments);
 

@@ -1,14 +1,13 @@
-/**
- * Created by User on 04.12.2015.
- */
 function TestApp(el){
 
     this.viewContainer = el;
     this.speed = 100;
+    this.array = [];
 
     this.startTreeTest = function(){
         this.view = new createViewTreeSort(this.viewContainer);
         this.sorting = new TreeSort(this.view);
+        this.sorting.setArray(this.array);
         this.sorting.startCreateTree();
         this.start();
     }
@@ -16,11 +15,16 @@ function TestApp(el){
     this.startBubbleTest = function(){
         this.view = new createViewBubbleSort(this.viewContainer);
         this.sorting = new BubbleSort(this.view);
+        this.sorting.setArray(this.array);
         this.sorting.initSort();
         this.start();
     }
 
     this.start = function(){
+        if(this.idInterval){
+            clearInterval(this.idInterval);
+            this.idInterval = undefined;
+        }
         this.idInterval = setInterval($.proxy(this.tick, this), this.speed);
     }
 

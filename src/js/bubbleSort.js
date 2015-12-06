@@ -1,6 +1,3 @@
-/**
- * Created by User on 04.12.2015.
- */
 function BubbleSort(view){
     BaseSort.apply(this, arguments);
 

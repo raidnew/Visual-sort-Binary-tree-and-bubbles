@@ -1,7 +1,3 @@
-/**
- * Created by User on 04.12.2015.
- */
-
 function startApp(){
     var fileArray = ["js/BaseView.js", "js/BaseSort.js", "js/BubbleSort.js", "js/TreeSort.js", "js/TestApp.js", "js/BubbleSortView.js", "js/TreeSortView.js"];
     var waitLoad = 0;
@@ -42,7 +38,10 @@ var test;
 function initApp(){
     var el = $('#sortAnimation')[0];
     test = new TestApp(el);
+    test.array = generateRandomArray();
     test.setSpeed($('#rangespeedsort')[0].value);
+    onChangeArrLength();
+    onChangeSpeed();
 }
 
 function createRandomArray(){
@@ -68,8 +67,12 @@ function startSort(){
 var stepcount = 0;
 
 function onChangeSpeed(){
-    $('#speedsort').html($('#rangespeedsort')[0].value);
-    test.setSpeed($('#rangespeedsort')[0].value);
+    $('#speedsort').html($('#rangespeedsort')[0].max - $('#rangespeedsort')[0].value);
+    test.setSpeed($('#rangespeedsort')[0].max - $('#rangespeedsort')[0].value);
+}
+
+function onChangeArrLength(){
+    $('#arrlengthinfo').html($('#arrlength')[0].value);
 }
 
 function outInfo(){
