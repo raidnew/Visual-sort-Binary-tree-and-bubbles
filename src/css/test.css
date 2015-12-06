@@ -32,17 +32,31 @@
 .treeView .branch {
     color: blue;
     float: left;
+    font-weight: normal;
     /*border-style: groove;*/
     /*min-width: 20px;*/
+}
+
+.treeView .ready {
+    color: green;
+    font-weight: bold;
 }
 
 .treeView .test {
     color: red;
 }
 
+.treeView .connectLine {
+    content:url("../img/black.jpg");
+    opacity: 0.3;
+    position: absolute;
+    width: 1px;
+}
+
 .treeView .valueBranch {
     text-align: center;
-    padding-top: 20px;
+    /*padding-top: 20px;*/
+    margin-top: 20px;
 }
 
 .treeView .branchParent {
@@ -51,12 +65,14 @@
 
 .treeView .leftbranch {
     float: left;
-    padding-right: 20px;
+    margin-left: 20px;
+    /*padding-right: 20px;*/
 }
 
 .treeView .rightbranch {
     float: right;
-    padding-left: 20px;
+    /*padding-left: 20px;*/
+    margin-right: 20px;
 }
 
 .sortedArray {

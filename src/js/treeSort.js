@@ -30,7 +30,6 @@ function TreeSort(view){
 
                 this.view.disableElementInArray(this.indexArray);
                 this.view.addValueToBranch(this.currentBranch);
-
                 this.currentBranch = this.tree;
                 this.indexArray++;
             }else{ //Branch have value, select child
@@ -44,7 +43,6 @@ function TreeSort(view){
     }
 
     this.testTreeElement = function(value, tree){
-
         if(!tree.isDefined()){
             tree.setValue(value);
             return true;
@@ -85,7 +83,9 @@ function TreeSort(view){
         var result = this.selectValue();
         if(result === false){
             return false;
+            this.view.endTestTreeElement();
         }else if(typeof result == "number") {
+            this.view.selectedBranchValue(this.currentBranch);
             this.sortedArray.push(result);
             this.view.addValueInFinalArray(result);
         }else{
@@ -108,6 +108,7 @@ function TreeSort(view){
             if(this.currentBranch.parent !== undefined) {
                 return this.currentBranch.parent;
             }else{
+                this.view.endTestTreeElement();
                 return false;
             }
         }
@@ -117,6 +118,7 @@ function TreeSort(view){
 TreeSort.prototype = Object.create(BaseSort.prototype);
 
 TreeSort.prototype.tick = function(){
+    addStepCount();
     if(this.currentStatus == this.CREATE_TREE){
         return this.addTreeElement();
     }else if(this.currentStatus == this.TRAVERSE_TREE){

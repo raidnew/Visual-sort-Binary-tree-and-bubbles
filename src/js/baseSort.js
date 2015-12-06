@@ -2,7 +2,7 @@
  * Created by User on 04.12.2015.
  */
 function BaseSort(view){
-    this.arrayForSort = [];
+    this.arrayForSort = generateRandomArray();
     this.sortedArray = [];
     this.view = view;
 }

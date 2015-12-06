@@ -38,42 +38,54 @@ function startApp(){
 }
 
 var test;
-var array;
 
 function initApp(){
     var el = $('#sortAnimation')[0];
     test = new TestApp(el);
-}
-
-function treeSort(){
-    test.array = array;
-    test.startTreeTest();
-
-}
-
-function bubbleSort(){
-    test.array = array;
-    test.startBubbleTest();
+    test.setSpeed($('#rangespeedsort')[0].value);
 }
 
 function createRandomArray(){
-    array = generateRandomArray(30, 0, 200);
+    test.array = generateRandomArray();
 }
 
 function startSort(){
+    stepcount = 0;
+    var el = $('#sortAnimation').html('');
     var type = $('input[name=sorttype]:checked').val();//document.getElementById("sorttype");
+
     switch (type){
         case "bubble":
-            bubbleSort();
+            test.startBubbleTest();
             break;
         case "tree":
-            treeSort();
+            test.startTreeTest();
             break;
 
     }
 }
 
-function generateRandomArray(length, min, max){
+var stepcount = 0;
+
+function onChangeSpeed(){
+    $('#speedsort').html($('#rangespeedsort')[0].value);
+    test.setSpeed($('#rangespeedsort')[0].value);
+}
+
+function outInfo(){
+    $('#info').html('<a>Step: </a><a id="step">'+stepcount+'</a>');
+}
+
+function addStepCount(){
+    stepcount++;
+    outInfo();
+}
+
+function generateRandomArray(){
+    length = document.getElementById("arrlength").value;
+    min = 0;
+    max = length * 2;
+
     var array = [];
     for(var i = 0; i < length; i++){
         array.push(Math.round(Math.random() * (max - min) + min));

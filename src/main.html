@@ -11,9 +11,11 @@
 <a>Много интересной инфы о сортировке массивов</a><br>
 <input type="radio" name="sorttype" value="tree"> Сортировка бинарным деревом<br>
 <input type="radio" name="sorttype" value="bubble"> Сортировка пузырьком<br>
-<button onclick="createRandomArray()">Create random array</button><br>
+Длинна массива <input type="range" min="3" max="50" id="arrlength"><br>
 <button onclick="startSort()">Start sort</button><br>
+Скорость сортировки:<a id="speedsort">100</a> <input type="range" min="10" max="1000" value="100" id="rangespeedsort" onchange="onChangeSpeed()"><br>
 
+<div id="info"></div>
 <div id="sortAnimation"></div>
 
 </body>

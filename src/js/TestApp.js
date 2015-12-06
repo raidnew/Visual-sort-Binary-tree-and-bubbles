@@ -3,20 +3,12 @@
  */
 function TestApp(el){
 
-    this.idInterval;
-    this.sorting;
-    this.array;
-
     this.viewContainer = el;
-    this.view;
+    this.speed = 100;
 
     this.startTreeTest = function(){
         this.view = new createViewTreeSort(this.viewContainer);
         this.sorting = new TreeSort(this.view);
-        if(this.array === undefined){
-            this.array = createRandomArray(30, 0, 100);
-        }
-        this.sorting.setArray(this.array);
         this.sorting.startCreateTree();
         this.start();
     }
@@ -24,16 +16,21 @@ function TestApp(el){
     this.startBubbleTest = function(){
         this.view = new createViewBubbleSort(this.viewContainer);
         this.sorting = new BubbleSort(this.view);
-        if(this.array === undefined){
-            this.array = createRandomArray(30, 0, 100);
-        }
-        this.sorting.setArray(this.array);
         this.sorting.initSort();
         this.start();
     }
 
     this.start = function(){
-        this.idInterval = setInterval($.proxy(this.tick, this), 200);
+        this.idInterval = setInterval($.proxy(this.tick, this), this.speed);
+    }
+
+    this.setSpeed = function(speed){
+        this.speed = speed;
+        if(this.idInterval){
+            clearInterval(this.idInterval);
+            this.idInterval = undefined;
+            this.start();
+        }
     }
 
     this.tick = function(){
@@ -45,11 +42,13 @@ function TestApp(el){
                 this.sorting.startTraverseTree();
             } else if (result === false && this.sorting.currentStatus == this.sorting.TRAVERSE_TREE) {
                 clearInterval(this.idInterval);
+                this.idInterval = undefined;
                 return false;
             }
         }else if(this.sorting instanceof BubbleSort) {
             if (result === false) {
                 clearInterval(this.idInterval);
+                this.idInterval = undefined;
             }
         }
     }

@@ -45,6 +45,8 @@ function createViewBubbleSort(el){
     }
 
     this.selectElements = function(index1, index2){
+        this.removeSelect();
+
         var el1 = $("#actionelement"+index1);
         var el2 = $("#actionelement"+index2);
 
@@ -54,15 +56,19 @@ function createViewBubbleSort(el){
 
     this.swapElements = function(index1, index2){
 
-        $('.actionArrayElement').removeClass('select');
+        this.removeSelect();
 
         var el1 = $("#actionelement"+index1);
         var el2 = $("#actionelement"+index2);
 
-        el1.attr('id', "#actionelement"+index2);
-        el2.attr('id', "#actionelement"+index1);
+        el1.attr('id', "actionelement"+index2);
+        el2.attr('id', "actionelement"+index1);
 
         el2.insertBefore(el1, el2);
+    }
+
+    this.removeSelect = function(index1, index2){
+        $('.actionArrayElement').removeClass('select');
     }
 }
 

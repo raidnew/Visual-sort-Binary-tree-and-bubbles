@@ -6,7 +6,7 @@ function createViewTreeSort(el){
 
     BaseView.apply(this, arguments);
 
-    this.selectedBranch;
+    this.graphics = $('<canvas>');
 
     this.drawArray = function(array){
 
@@ -23,6 +23,7 @@ function createViewTreeSort(el){
         }
 
         this.mainel.appendChild(el[0]);
+        this.mainel.appendChild(this.graphics[0]);
     }
 
     this.selectElementInArray = function(index){
@@ -44,37 +45,33 @@ function createViewTreeSort(el){
 
     this.selectTreeElement = function(branch){
 
-        if(this.selectedBranch !== undefined){
-            this.endTestTreeElement(this.selectedBranch);
-            this.selectedBranch = undefined;
-        }
+        this.endTestTreeElement();
 
         if(branch.view === undefined){
             this.createTreeViewElement(branch);
         }
-
         this.selectedBranch = branch;
-
         this.selectedBranch.view.addClass("test");
     }
 
     this.endTestTreeElement = function(branch){
-        if(branch.view !== undefined) {
-            branch.view.removeClass("test");
-        }
+        $(".test").removeClass('test');
     }
 
     this.addValueToBranch = function(branch){
-        if(this.selectedBranch !== undefined){
-            this.endTestTreeElement(this.selectedBranch);
-            this.selectedBranch = undefined;
-        }
+        this.endTestTreeElement();
 
         var elvalue = $('<div>');
         elvalue.addClass("valueBranch");
         elvalue.html("<a>"+branch.value+"</a>");
 
         branch.view.append(elvalue);
+
+        if(branch.root === undefined){
+            this.checkLineBranch(branch);
+        }else {
+            this.checkLineBranch(branch.root);
+        }
     }
 
     this.createTreeViewElement = function(branch){
@@ -93,9 +90,89 @@ function createViewTreeSort(el){
                 el.addClass("rightbranch");
                 branch.parent.view.append(el);
             }
+
+            var img = $('<img>');
+            img.addClass("connectLine");
+            branch.connectLine = img;
+            $("#treeView").append(img);
         }
 
         branch.view = el;
+
+        if(branch.root === undefined){
+            this.checkLineBranch(branch);
+        }else {
+            this.checkLineBranch(branch.root);
+        }
+
+    }
+
+    this.checkLineBranch = function(branch){
+
+        /*
+        this.graphics[0].style.position = "absolute";
+
+        console.log(this.graphics.width)
+
+        this.graphics.style.width = this.mainel.style.width+"px";
+        this.graphics.height = this.mainel.height+"px";
+         */
+
+        if(branch.left != undefined){
+            this.checkLineBranch(branch.left);
+        }
+        if(branch.right != undefined){
+            this.checkLineBranch(branch.right);
+        }
+        this.positionline(branch);
+    }
+
+    this.positionline = function(branch){
+        if(branch.parent !== undefined) {
+
+            var el = branch.connectLine[0];
+
+            var mepos = branch.view.offset();
+            var mesizewidth = branch.view.width();
+            var mesizeheight = branch.view.height();
+
+            var parentpos = branch.parent.view.offset();
+            var parentsizewidth = branch.parent.view.width();
+            var parentsizeheight = branch.parent.view.height();
+
+            var topoffset = parseInt($(".valueBranch").css('margin-top').replace(/\D/g, ""));
+            var heightparentdata = parseInt($(".valueBranch").height());
+
+            var endy = mepos.top + topoffset;
+            var endx = mepos.left + mesizewidth/2;
+
+            var starty = parentpos.top + heightparentdata + topoffset;
+            var startx = parentpos.left + parentsizewidth/2;
+
+            var width = endx - startx;
+            var height = endy - starty;
+
+            var length = Math.sqrt(width * width + height * height)
+            var angleRad = -Math.atan2(width, height);
+            var angleGrad = angleRad/Math.PI*180;
+
+            var toOffsetLine = Math.sin(angleRad) * length;
+
+            starty += toOffsetLine;
+
+            el.style.transform = "rotate("+angleGrad+"deg)";
+            el.style.height = length+"px";
+
+            el.style.top = starty + "px";
+            el.style.left = startx + "px";
+
+
+
+
+
+
+
+        }
     }
 
     this.drawSortedArray = function(){
@@ -110,13 +187,16 @@ function createViewTreeSort(el){
         var elArray = $("<a>");
         elArray.html(value);
         elArray.addClass("arrayElement");
-        //elArray.attr('id', "element");
-
         $("#sortedArray").append(elArray);
     }
 
     this.checkBranch = function(branch){
+        this.endTestTreeElement();
+        branch.view.addClass('test');
+    }
 
+    this.selectedBranchValue = function(branch){
+        branch.view.addClass('ready');
     }
 
 }

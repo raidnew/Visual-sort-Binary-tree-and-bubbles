@@ -15,7 +15,8 @@ function BubbleSort(view){
     }
 
     this.stepSort = function(){
-        if(this.index1 >= this.sortedArray.length){
+        if(this.index1 >= this.sortedArray.length-1){
+            this.view.removeSelect();
             return false;
         }else{
             if(this.index2 >= (this.sortedArray.length - this.index1 - 1)){
@@ -36,6 +37,7 @@ function BubbleSort(view){
                     this.sortedArray[this.index2] = this.sortedArray[this.index2 + 1];
                     this.sortedArray[this.index2 + 1] = temp;
                     this.swaping = false;
+                    this.index2++;
                 }
             }
             return true;
@@ -56,5 +58,6 @@ function BubbleSort(view){
 BubbleSort.prototype = Object.create(BaseSort.prototype);
 
 BubbleSort.prototype.tick = function(){
+    addStepCount();
     return this.stepSort();
 }
