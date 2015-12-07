@@ -1,3 +1,3 @@
-function BaseView(el){
-    this.mainel = el;
+function BaseView(el) {
+   this.mainel = el;
 }

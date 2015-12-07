@@ -1,183 +1,181 @@
-function createViewTreeSort(el){
+function createViewTreeSort(el) {
 
-    BaseView.apply(this, arguments);
+   BaseView.apply(this, arguments);
 
-    this.drawArray = function(array){
-        var el = $('<div>');
-        el.addClass("startArray");
+   this.drawArray = function (array) {
+      var el = $('<div>');
+      el.addClass("startArray");
 
-        for(var i = 0;i<array.length;i++){
-            var elArray = $("<a>");
-            elArray.html(array[i]);
-            elArray.addClass("arrayElement");
-            elArray.attr('id', "element"+i);
-            el.append(elArray);
-        }
+      for (var i = 0; i < array.length; i++) {
+         var elArray = $("<a>");
+         elArray.html(array[i]);
+         elArray.addClass("arrayElement");
+         elArray.attr('id', "element" + i);
+         el.append(elArray);
+      }
 
-        this.mainel.appendChild(el[0]);
-    }
+      this.mainel.appendChild(el[0]);
+   }
 
-    this.selectElementInArray = function(index){
-        $("#element"+index).removeClass("arrayElement");
-        $("#element"+index).addClass("arrayElementSelect");
-    }
+   this.selectElementInArray = function (index) {
+      $("#element" + index).removeClass("arrayElement");
+      $("#element" + index).addClass("arrayElementSelect");
+   }
 
-    this.disableElementInArray = function(index){
-        $("#element"+index).removeClass("arrayElementSelect");
-        $("#element"+index).addClass("arrayElementDisable");
-    }
+   this.disableElementInArray = function (index) {
+      $("#element" + index).removeClass("arrayElementSelect");
+      $("#element" + index).addClass("arrayElementDisable");
+   }
 
-    this.drawTree = function(){
-        var el = $("<div>");
-        el.addClass("treeView");
-        el.attr('id', "treeView");
-        this.mainel.appendChild(el[0]);
-    }
+   this.drawTree = function () {
+      var el = $("<div>");
+      el.addClass("treeView");
+      el.attr('id', "treeView");
+      this.mainel.appendChild(el[0]);
+   }
 
-    this.selectTreeElement = function(branch){
+   this.selectTreeElement = function (branch) {
+      this.endTestTreeElement();
+      if (branch.view === undefined) {
+         this.createTreeViewElement(branch);
+      }
+      this.selectedBranch = branch;
+      this.selectedBranch.view.addClass("test");
+   }
 
-        this.endTestTreeElement();
+   this.endTestTreeElement = function (branch) {
+      $(".test").removeClass('test');
+   }
 
-        if(branch.view === undefined){
-            this.createTreeViewElement(branch);
-        }
-        this.selectedBranch = branch;
-        this.selectedBranch.view.addClass("test");
-    }
+   this.addValueToBranch = function (branch) {
+      this.endTestTreeElement();
 
-    this.endTestTreeElement = function(branch){
-        $(".test").removeClass('test');
-    }
+      var elvalue = $('<div>');
+      elvalue.addClass("valueBranch");
+      elvalue.html("<a>" + branch.value + "</a>");
 
-    this.addValueToBranch = function(branch){
-        this.endTestTreeElement();
+      branch.view.append(elvalue);
 
-        var elvalue = $('<div>');
-        elvalue.addClass("valueBranch");
-        elvalue.html("<a>"+branch.value+"</a>");
+      if (branch.root === undefined) {
+         this.checkLineBranch(branch);
+      } else {
+         this.checkLineBranch(branch.root);
+      }
+   }
 
-        branch.view.append(elvalue);
+   this.createTreeViewElement = function (branch) {
+      var el = $('<div>');
+      el.addClass("branch");
+      if (branch.parent === undefined) {
+         $("#treeView").append(el);
+      } else {
 
-        if(branch.root === undefined){
-            this.checkLineBranch(branch);
-        }else {
-            this.checkLineBranch(branch.root);
-        }
-    }
+         branch.parent.view.addClass('branchParent');
 
-    this.createTreeViewElement = function(branch){
-        var el = $('<div>');
-        el.addClass("branch");
-        if(branch.parent === undefined) {
-            $("#treeView").append(el);
-        }else{
+         if (branch === branch.parent.left) {
+            el.addClass("leftbranch");
+            branch.parent.view.append(el);
+         } else if (branch === branch.parent.right) {
+            el.addClass("rightbranch");
+            branch.parent.view.append(el);
+         }
 
-            branch.parent.view.addClass('branchParent');
+         var img = $('<img>');
+         img.addClass("connectLine");
+         branch.connectLine = img;
+         $("#treeView").append(img);
+      }
 
-            if(branch === branch.parent.left) {
-                el.addClass("leftbranch");
-                branch.parent.view.append(el);
-            }else if(branch === branch.parent.right){
-                el.addClass("rightbranch");
-                branch.parent.view.append(el);
-            }
+      branch.view = el;
 
-            var img = $('<img>');
-            img.addClass("connectLine");
-            branch.connectLine = img;
-            $("#treeView").append(img);
-        }
+      if (branch.root === undefined) {
+         this.checkLineBranch(branch);
+      } else {
+         this.checkLineBranch(branch.root);
+      }
 
-        branch.view = el;
+   }
 
-        if(branch.root === undefined){
-            this.checkLineBranch(branch);
-        }else {
-            this.checkLineBranch(branch.root);
-        }
+   this.checkLineBranch = function (branch) {
+      if (branch.left != undefined) {
+         this.checkLineBranch(branch.left);
+      }
+      if (branch.right != undefined) {
+         this.checkLineBranch(branch.right);
+      }
+      this.positionline(branch);
+   }
 
-    }
+   this.positionline = function (branch) {
+      if (branch.parent !== undefined) {
 
-    this.checkLineBranch = function(branch){
-        if(branch.left != undefined){
-            this.checkLineBranch(branch.left);
-        }
-        if(branch.right != undefined){
-            this.checkLineBranch(branch.right);
-        }
-        this.positionline(branch);
-    }
+         var el = branch.connectLine[0];
 
-    this.positionline = function(branch){
-        if(branch.parent !== undefined) {
+         var mepos = branch.view.offset();
+         var mesizewidth = branch.view.width();
+         var mesizeheight = branch.view.height();
 
-            var el = branch.connectLine[0];
+         var parentpos = branch.parent.view.offset();
+         var parentsizewidth = branch.parent.view.width();
+         var parentsizeheight = branch.parent.view.height();
 
-            var mepos = branch.view.offset();
-            var mesizewidth = branch.view.width();
-            var mesizeheight = branch.view.height();
+         var topoffset = parseInt($(".valueBranch").css('margin-top').replace(/\D/g, ""));
+         var heightparentdata = parseInt($(".valueBranch").height());
 
-            var parentpos = branch.parent.view.offset();
-            var parentsizewidth = branch.parent.view.width();
-            var parentsizeheight = branch.parent.view.height();
+         var endy = mepos.top + topoffset;
+         var endx = mepos.left + mesizewidth / 2;
 
-            var topoffset = parseInt($(".valueBranch").css('margin-top').replace(/\D/g, ""));
-            var heightparentdata = parseInt($(".valueBranch").height());
+         var starty = parentpos.top + heightparentdata + topoffset;
+         var startx = parentpos.left + parentsizewidth / 2;
 
-            var endy = mepos.top + topoffset;
-            var endx = mepos.left + mesizewidth/2;
+         var width = endx - startx;
+         var height = endy - starty;
 
-            var starty = parentpos.top + heightparentdata + topoffset;
-            var startx = parentpos.left + parentsizewidth/2;
+         var value = branch.view.children(".valueBranch").height() / 2;
 
-            var width = endx - startx;
-            var height = endy - starty;
+         startx -= height / 2 - value;
 
-            var value = branch.view.children(".valueBranch").height() / 2;
+         var length = Math.sqrt(width * width + height * height)
+         var angleRad = Math.atan2(width, height);
+         var angleGrad = -angleRad / Math.PI * 180;
 
-            startx -= height / 2 - value;
+         var topOffsetLine = (1 - Math.cos(angleRad)) * length / 2;
+         var leftOffsetLine = Math.sin(angleRad) * length / 2;
 
-            var length = Math.sqrt(width * width + height * height)
-            var angleRad = Math.atan2(width, height);
-            var angleGrad = -angleRad/Math.PI*180;
+         startx = startx + leftOffsetLine;
+         starty = starty - topOffsetLine;
 
-            var topOffsetLine = (1 - Math.cos(angleRad)) * length / 2;
-            var leftOffsetLine = Math.sin(angleRad) * length / 2;
+         el.style.transform = "rotate(" + angleGrad + "deg)";
+         el.style.height = length + "px";
 
-            startx = startx + leftOffsetLine;
-            starty = starty - topOffsetLine;//Math.abs(leftOffsetLine);
+         el.style.top = starty + "px";
+         el.style.left = startx + "px";
+      }
+   }
 
-            el.style.transform = "rotate("+angleGrad+"deg)";
-            el.style.height = length+"px";
+   this.drawSortedArray = function () {
+      var el = $('<div>');
+      el.addClass("sortedArray");
+      el.attr('id', "sortedArray");
 
-            el.style.top = starty + "px";
-            el.style.left = startx + "px";
-        }
-    }
+      this.mainel.appendChild(el[0]);
+   }
 
-    this.drawSortedArray = function(){
-        var el = $('<div>');
-        el.addClass("sortedArray");
-        el.attr('id', "sortedArray");
+   this.addValueInFinalArray = function (value) {
+      var elArray = $("<a>");
+      elArray.html(value);
+      elArray.addClass("arrayElement");
+      $("#sortedArray").append(elArray);
+   }
 
-        this.mainel.appendChild(el[0]);
-    }
+   this.checkBranch = function (branch) {
+      this.endTestTreeElement();
+      branch.view.addClass('test');
+   }
 
-    this.addValueInFinalArray = function(value){
-        var elArray = $("<a>");
-        elArray.html(value);
-        elArray.addClass("arrayElement");
-        $("#sortedArray").append(elArray);
-    }
-
-    this.checkBranch = function(branch){
-        this.endTestTreeElement();
-        branch.view.addClass('test');
-    }
-
-    this.selectedBranchValue = function(branch){
-        branch.view.addClass('ready');
-    }
+   this.selectedBranchValue = function (branch) {
+      branch.view.addClass('ready');
+   }
 
 }
 

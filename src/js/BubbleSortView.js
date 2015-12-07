@@ -1,72 +1,69 @@
-function createViewBubbleSort(el){
-    BaseView.apply(this, arguments);
+function createViewBubbleSort(el) {
+   BaseView.apply(this, arguments);
 
-    this.selectedBranch;
+   this.selectedBranch;
 
-    this.drawArray = function(array){
+   this.drawArray = function (array) {
 
-        var el = $('<div>');
-        el.addClass("startArray");
+      var el = $('<div>');
+      el.addClass("startArray");
 
-        for(var i = 0;i<array.length;i++){
-            var elArray = $("<a>");
-            elArray.html(array[i]);
-            elArray.addClass("arrayElement");
-            elArray.attr('id', "element"+i);
+      for (var i = 0; i < array.length; i++) {
+         var elArray = $("<a>");
+         elArray.html(array[i]);
+         elArray.addClass("arrayElement");
+         elArray.attr('id', "element" + i);
 
-            el.append(elArray);
-        }
+         el.append(elArray);
+      }
 
-        this.mainel.appendChild(el[0]);
-    }
+      this.mainel.appendChild(el[0]);
+   }
 
-    this.drawActionArray = function(array){
+   this.drawActionArray = function (array) {
 
-        var el = $('<div>');
-        el.addClass("actionArray");
-        el.attr('id', "actionArray");
+      var el = $('<div>');
+      el.addClass("actionArray");
+      el.attr('id', "actionArray");
 
-        for(var i = 0;i<array.length;i++){
-            var elArray = $("<div>");
-            elArray.html('<a>'+array[i]+'<a>');
-            elArray.addClass("actionArrayElement");
-            elArray.attr('id', "actionelement"+i);
+      for (var i = 0; i < array.length; i++) {
+         var elArray = $("<div>");
+         elArray.html('<a>' + array[i] + '<a>');
+         elArray.addClass("actionArrayElement");
+         elArray.attr('id', "actionelement" + i);
+         el.append(elArray);
+         el.posx = el.left;
+      }
 
-            el.append(elArray);
+      this.mainel.appendChild(el[0]);
+   }
 
-            el.posx = el.left;
+   this.selectElements = function (index1, index2) {
+      this.removeSelect();
 
-        }
+      var el1 = $("#actionelement" + index1);
+      var el2 = $("#actionelement" + index2);
 
-        this.mainel.appendChild(el[0]);
-    }
+      el1.addClass("select");
+      el2.addClass("select");
+   }
 
-    this.selectElements = function(index1, index2){
-        this.removeSelect();
+   this.swapElements = function (index1, index2) {
 
-        var el1 = $("#actionelement"+index1);
-        var el2 = $("#actionelement"+index2);
+      this.removeSelect();
 
-        el1.addClass("select");
-        el2.addClass("select");
-    }
+      var el1 = $("#actionelement" + index1);
+      var el2 = $("#actionelement" + index2);
 
-    this.swapElements = function(index1, index2){
+      el1.attr('id', "actionelement" + index2);
+      el2.attr('id', "actionelement" + index1);
 
-        this.removeSelect();
+      el2.insertBefore(el1, el2);
+   }
 
-        var el1 = $("#actionelement"+index1);
-        var el2 = $("#actionelement"+index2);
-
-        el1.attr('id', "actionelement"+index2);
-        el2.attr('id', "actionelement"+index1);
-
-        el2.insertBefore(el1, el2);
-    }
-
-    this.removeSelect = function(index1, index2){
-        $('.actionArrayElement').removeClass('select');
-    }
+   this.removeSelect = function (index1, index2) {
+      $('.actionArrayElement').removeClass('select');
+   }
 }
 
 createViewBubbleSort.prototype = Object.create(BaseView.prototype);

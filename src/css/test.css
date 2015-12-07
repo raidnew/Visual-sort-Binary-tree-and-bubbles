@@ -56,7 +56,6 @@
 
 .treeView .connectLine {
     content:url("../img/black.jpg");
-    opacity: 0.3;
     position: absolute;
     width: 1px;
 }
